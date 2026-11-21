@@ -1,0 +1,13 @@
+@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "Помилка";
+}
+
+<h1 class="text-danger">Сталася помилка</h1>
+<p>Не вдалося обробити запит. Спробуйте ще раз або поверніться на <a asp-page="/Index">головну</a>.</p>
+
+@if (Model.ShowRequestId)
+{
+    <p><strong>Код запиту:</strong> <code>@Model.RequestId</code></p>
+}

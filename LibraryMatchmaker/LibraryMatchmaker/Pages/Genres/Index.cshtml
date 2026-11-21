@@ -1,0 +1,28 @@
+@page
+@model LibraryMatchmaker.Pages.Genres.IndexModel
+@{
+    ViewData["Title"] = "Жанри";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Жанри</h1>
+    <a class="btn btn-primary" asp-page="Edit">Додати жанр</a>
+</div>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr><th>Назва</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var genre in Model.Genres)
+        {
+            <tr>
+                <td>@genre.Name</td>
+                <td class="text-end text-nowrap">
+                    <a class="btn btn-sm btn-outline-primary" asp-page="Edit" asp-route-id="@genre.GenreId">Редагувати</a>
+                    <partial name="_DeleteButton" model="genre.GenreId" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

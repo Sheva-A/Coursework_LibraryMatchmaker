@@ -1,0 +1,64 @@
+@page
+@model LibraryMatchmaker.Pages.Books.IndexModel
+@{
+    ViewData["Title"] = "Каталог";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Каталог книг</h1>
+    <a class="btn btn-primary" asp-page="Edit">Додати книгу</a>
+</div>
+
+<form method="get" class="row g-2 align-items-center mb-3">
+    <div class="col-md-5">
+        <input asp-for="Search" class="form-control" placeholder="Назва або автор" />
+    </div>
+    <div class="col-md-3">
+        <select asp-for="GenreId" asp-items="Model.Genres" class="form-select">
+            <option value="">Усі жанри</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <div class="form-check">
+            <input asp-for="OnlyAvailable" class="form-check-input" />
+            <label asp-for="OnlyAvailable" class="form-check-label">Є в наявності</label>
+        </div>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary">Знайти</button>
+        <a class="btn btn-link" asp-page="Index">Скинути</a>
+    </div>
+</form>
+
+@if (Model.Books.Count == 0)
+{
+    <p class="text-muted">Нічого не знайдено.</p>
+}
+else
+{
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Назва</th><th>Автор</th><th>Жанр</th><th>Видавництво</th>
+                <th class="text-center">Рік</th><th class="text-center">Вільно</th><th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model.Books)
+            {
+                <tr>
+                    <td><a asp-page="Details" asp-route-id="@book.BookId">@book.Title</a></td>
+                    <td>@book.Author</td>
+                    <td>@book.Genre</td>
+                    <td>@book.Publisher</td>
+                    <td class="text-center">@book.YearPublished</td>
+                    <td class="text-center">@book.CopiesAvailable з @book.CopiesTotal</td>
+                    <td class="text-end text-nowrap">
+                        <a class="btn btn-sm btn-outline-primary" asp-page="Edit" asp-route-id="@book.BookId">Редагувати</a>
+                        <partial name="_DeleteButton" model="book.BookId" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

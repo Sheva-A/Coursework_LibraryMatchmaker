@@ -1,0 +1,6 @@
+@model int
+@* Кнопка «Повернути»: після повернення залишаємось на тій самій вкладці *@
+<form method="post" asp-page-handler="Return" asp-route-id="@Model"
+      asp-route-filter="@Context.Request.Query["filter"]" class="d-inline">
+    <button type="submit" class="btn btn-sm btn-success">Повернути</button>
+</form>

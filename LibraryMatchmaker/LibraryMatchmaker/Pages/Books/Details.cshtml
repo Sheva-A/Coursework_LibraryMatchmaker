@@ -1,0 +1,45 @@
+@page "{id:int}"
+@model LibraryMatchmaker.Pages.Books.DetailsModel
+@{
+    ViewData["Title"] = Model.Book.Title;
+    var average = Model.Reviews.Count > 0 ? (decimal?)Model.Reviews.Average(r => r.Rating) : null;
+}
+
+<h1>@Model.Book.Title</h1>
+<p class="text-muted mb-3">@Model.Book.Author</p>
+
+<dl class="row col-md-6">
+    <dt class="col-sm-5">Жанр</dt><dd class="col-sm-7">@Model.Book.Genre</dd>
+    <dt class="col-sm-5">Видавництво</dt><dd class="col-sm-7">@Model.Book.Publisher</dd>
+    <dt class="col-sm-5">Рік видання</dt><dd class="col-sm-7">@Model.Book.YearPublished</dd>
+    <dt class="col-sm-5">ISBN</dt><dd class="col-sm-7">@Model.Book.Isbn</dd>
+    <dt class="col-sm-5">Вільних примірників</dt><dd class="col-sm-7">@Model.Book.CopiesAvailable з @Model.Book.CopiesTotal</dd>
+    <dt class="col-sm-5">Середня оцінка</dt><dd class="col-sm-7">@Fmt.Rating(average)</dd>
+</dl>
+
+<a class="btn btn-outline-primary mb-4" asp-page="Edit" asp-route-id="@Model.Book.BookId">Редагувати</a>
+
+<h4>Відгуки читачів</h4>
+@if (Model.Reviews.Count == 0)
+{
+    <p class="text-muted">Відгуків ще немає.</p>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr><th>Читач</th><th>Оцінка</th><th>Відгук</th><th>Дата</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var review in Model.Reviews)
+            {
+                <tr>
+                    <td>@review.Reader</td>
+                    <td><span class="stars">@Fmt.Stars(review.Rating)</span></td>
+                    <td>@review.Comment</td>
+                    <td>@Fmt.Date(review.ReviewDate)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

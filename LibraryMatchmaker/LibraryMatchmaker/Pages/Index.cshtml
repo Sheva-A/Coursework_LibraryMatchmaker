@@ -1,0 +1,18 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Головна";
+}
+
+<div class="home">
+    <h1 class="text-center mb-2">Книжковий матчмейкер</h1>
+    <p class="text-center text-muted mb-4">Підбираємо кожному читачеві книги за його смаком</p>
+
+    <form method="get" asp-page="/Readers/Details">
+        <label for="id" class="form-label">Підібрати книги для читача</label>
+        <div class="input-group">
+            <select id="id" name="id" asp-items="Model.Readers" class="form-select"></select>
+            <button type="submit" class="btn btn-primary">Підібрати</button>
+        </div>
+    </form>
+</div>

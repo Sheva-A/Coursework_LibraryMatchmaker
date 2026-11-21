@@ -1,0 +1,6 @@
+@model int
+@* Кнопка видалення запису з підтвердженням *@
+<form method="post" asp-page-handler="Delete" asp-route-id="@Model" class="d-inline"
+      onsubmit="return confirm('Видалити запис?')">
+    <button type="submit" class="btn btn-sm btn-outline-danger">Видалити</button>
+</form>

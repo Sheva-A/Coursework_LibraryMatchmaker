@@ -1,0 +1,31 @@
+@page
+@model LibraryMatchmaker.Pages.Authors.IndexModel
+@{
+    ViewData["Title"] = "Автори";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Автори</h1>
+    <a class="btn btn-primary" asp-page="Edit">Додати автора</a>
+</div>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr><th>Прізвище</th><th>Ім'я</th><th>Рік народження</th><th>Країна</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var author in Model.Authors)
+        {
+            <tr>
+                <td>@author.LastName</td>
+                <td>@author.FirstName</td>
+                <td>@author.BirthYear</td>
+                <td>@author.Country</td>
+                <td class="text-end text-nowrap">
+                    <a class="btn btn-sm btn-outline-primary" asp-page="Edit" asp-route-id="@author.AuthorId">Редагувати</a>
+                    <partial name="_DeleteButton" model="author.AuthorId" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

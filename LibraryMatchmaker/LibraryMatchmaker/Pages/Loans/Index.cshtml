@@ -1,0 +1,76 @@
+@page
+@model LibraryMatchmaker.Pages.Loans.IndexModel
+@{
+    ViewData["Title"] = "Видачі";
+    string Tab(string? filter) => Model.Filter == filter ? "nav-link active" : "nav-link";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Видачі книг</h1>
+    <a class="btn btn-primary" asp-page="Edit">Видати книгу</a>
+</div>
+
+<ul class="nav nav-pills mb-3">
+    <li class="nav-item"><a class="@Tab(null)" asp-page="Index">Усі</a></li>
+    <li class="nav-item"><a class="@Tab("active")" asp-page="Index" asp-route-filter="active">На руках</a></li>
+    <li class="nav-item"><a class="@Tab("overdue")" asp-page="Index" asp-route-filter="overdue">Боржники</a></li>
+</ul>
+
+@if (Model.Filter == "overdue")
+{
+    @if (Model.Debtors.Count == 0)
+    {
+        <p class="text-muted">Усі книги повертають вчасно.</p>
+    }
+    else
+    {
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr><th>Читач</th><th>Телефон</th><th>Книга</th><th>Видано</th><th>Термін</th><th class="text-center">Днів прострочено</th><th></th></tr>
+            </thead>
+            <tbody>
+                @foreach (var debtor in Model.Debtors)
+                {
+                    <tr>
+                        <td>@debtor.Reader</td>
+                        <td class="text-nowrap">@debtor.Phone</td>
+                        <td>@debtor.Title</td>
+                        <td>@Fmt.Date(debtor.LoanDate)</td>
+                        <td>@Fmt.Date(debtor.DueDate)</td>
+                        <td class="text-center"><span class="badge status-overdue">@debtor.DaysOverdue</span></td>
+                        <td class="text-end"><partial name="_ReturnButton" model="debtor.LoanId" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr><th>Читач</th><th>Книга</th><th>Видано</th><th>Термін</th><th>Повернено</th><th>Статус</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (var loan in Model.Loans)
+            {
+                <tr>
+                    <td>@loan.Reader</td>
+                    <td>@loan.Title</td>
+                    <td>@Fmt.Date(loan.LoanDate)</td>
+                    <td>@Fmt.Date(loan.DueDate)</td>
+                    <td>@Fmt.Date(loan.ReturnDate)</td>
+                    <td><span class="badge @Fmt.StatusClass(loan.Status)">@loan.Status</span></td>
+                    <td class="text-end text-nowrap">
+                        @if (loan.ReturnDate == null)
+                        {
+                            <partial name="_ReturnButton" model="loan.LoanId" />
+                        }
+                        <a class="btn btn-sm btn-outline-primary" asp-page="Edit" asp-route-id="@loan.LoanId">Редагувати</a>
+                        <partial name="_DeleteButton" model="loan.LoanId" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

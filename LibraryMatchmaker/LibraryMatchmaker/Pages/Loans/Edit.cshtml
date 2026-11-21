@@ -1,0 +1,50 @@
+@page "{id:int?}"
+@model LibraryMatchmaker.Pages.Loans.EditModel
+@{
+    ViewData["Title"] = Model.IsNew ? "Видача книги" : "Редагування видачі";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+    <input type="hidden" asp-for="Item.LoanId" />
+
+    <div class="mb-3">
+        <label asp-for="Item.ReaderId" class="form-label">Читач</label>
+        <select asp-for="Item.ReaderId" asp-items="Model.Readers" class="form-select">
+            <option value="">Оберіть читача</option>
+        </select>
+        <span asp-validation-for="Item.ReaderId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.BookId" class="form-label">Книга</label>
+        <select asp-for="Item.BookId" asp-items="Model.Books" class="form-select">
+            <option value="">Оберіть книгу</option>
+        </select>
+        <span asp-validation-for="Item.BookId" class="text-danger"></span>
+    </div>
+    <div class="row">
+        <div class="col mb-3">
+            <label asp-for="Item.LoanDate" class="form-label">Дата видачі</label>
+            <input asp-for="Item.LoanDate" type="date" class="form-control" />
+            <span asp-validation-for="Item.LoanDate" class="text-danger"></span>
+        </div>
+        <div class="col mb-3">
+            <label asp-for="Item.DueDate" class="form-label">Повернути до</label>
+            <input asp-for="Item.DueDate" type="date" class="form-control" />
+            <span asp-validation-for="Item.DueDate" class="text-danger"></span>
+        </div>
+        <div class="col mb-3">
+            <label asp-for="Item.ReturnDate" class="form-label">Повернено</label>
+            <input asp-for="Item.ReturnDate" type="date" class="form-control" />
+            <span asp-validation-for="Item.ReturnDate" class="text-danger"></span>
+        </div>
+    </div>
+
+    <partial name="_FormButtons" />
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

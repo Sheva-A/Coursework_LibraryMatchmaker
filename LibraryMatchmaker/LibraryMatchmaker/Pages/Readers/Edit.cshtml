@@ -1,0 +1,56 @@
+@page "{id:int?}"
+@model LibraryMatchmaker.Pages.Readers.EditModel
+@{
+    ViewData["Title"] = Model.IsNew ? "Новий читач" : "Редагування читача";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+    <input type="hidden" asp-for="Item.ReaderId" />
+
+    <div class="mb-3">
+        <label asp-for="Item.LastName" class="form-label">Прізвище</label>
+        <input asp-for="Item.LastName" class="form-control" />
+        <span asp-validation-for="Item.LastName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.FirstName" class="form-label">Ім'я</label>
+        <input asp-for="Item.FirstName" class="form-control" />
+        <span asp-validation-for="Item.FirstName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.Phone" class="form-label">Телефон</label>
+        <input asp-for="Item.Phone" class="form-control" placeholder="+38(0XX)XXXXXXX" />
+        <span asp-validation-for="Item.Phone" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.Email" class="form-label">Email (необов'язково)</label>
+        <input asp-for="Item.Email" class="form-control" />
+        <span asp-validation-for="Item.Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.RegistrationDate" class="form-label">Дата реєстрації</label>
+        <input asp-for="Item.RegistrationDate" type="date" class="form-control" />
+        <span asp-validation-for="Item.RegistrationDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <div class="form-label">Улюблені жанри</div>
+        @foreach (var genre in Model.Genres)
+        {
+            <div class="form-check form-check-inline">
+                <input type="checkbox" class="form-check-input" id="genre@(genre.GenreId)"
+                       name="Item.GenreIds" value="@genre.GenreId" checked="@Model.Item.GenreIds.Contains(genre.GenreId)" />
+                <label class="form-check-label" for="genre@(genre.GenreId)">@genre.Name</label>
+            </div>
+        }
+    </div>
+
+    <partial name="_FormButtons" />
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,32 @@
+@page
+@model LibraryMatchmaker.Pages.Reviews.IndexModel
+@{
+    ViewData["Title"] = "Відгуки";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Відгуки читачів</h1>
+    <a class="btn btn-primary" asp-page="Edit">Додати відгук</a>
+</div>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr><th>Читач</th><th>Книга</th><th>Оцінка</th><th>Відгук</th><th>Дата</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var review in Model.Reviews)
+        {
+            <tr>
+                <td>@review.Reader</td>
+                <td>@review.Title</td>
+                <td><span class="stars">@Fmt.Stars(review.Rating)</span></td>
+                <td>@review.Comment</td>
+                <td>@Fmt.Date(review.ReviewDate)</td>
+                <td class="text-end text-nowrap">
+                    <a class="btn btn-sm btn-outline-primary" asp-page="Edit" asp-route-id="@review.ReviewId">Редагувати</a>
+                    <partial name="_DeleteButton" model="review.ReviewId" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,53 @@
+@page "{id:int?}"
+@model LibraryMatchmaker.Pages.Reviews.EditModel
+@{
+    ViewData["Title"] = Model.IsNew ? "Новий відгук" : "Редагування відгуку";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+    <input type="hidden" asp-for="Item.ReviewId" />
+
+    <div class="mb-3">
+        <label asp-for="Item.ReaderId" class="form-label">Читач</label>
+        <select asp-for="Item.ReaderId" asp-items="Model.Readers" class="form-select">
+            <option value="">Оберіть читача</option>
+        </select>
+        <span asp-validation-for="Item.ReaderId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.BookId" class="form-label">Книга</label>
+        <select asp-for="Item.BookId" asp-items="Model.Books" class="form-select">
+            <option value="">Оберіть книгу</option>
+        </select>
+        <span asp-validation-for="Item.BookId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.Rating" class="form-label">Оцінка</label>
+        <select asp-for="Item.Rating" class="form-select">
+            @for (byte rating = 5; rating >= 1; rating--)
+            {
+                <option value="@rating">@Fmt.Stars(rating) (@rating)</option>
+            }
+        </select>
+        <span asp-validation-for="Item.Rating" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.Comment" class="form-label">Відгук (необов'язково)</label>
+        <textarea asp-for="Item.Comment" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Item.Comment" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.ReviewDate" class="form-label">Дата відгуку</label>
+        <input asp-for="Item.ReviewDate" type="date" class="form-control" />
+        <span asp-validation-for="Item.ReviewDate" class="text-danger"></span>
+    </div>
+
+    <partial name="_FormButtons" />
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,30 @@
+@page
+@model LibraryMatchmaker.Pages.Publishers.IndexModel
+@{
+    ViewData["Title"] = "Видавництва";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Видавництва</h1>
+    <a class="btn btn-primary" asp-page="Edit">Додати видавництво</a>
+</div>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr><th>Назва</th><th>Місто</th><th>Країна</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var publisher in Model.Publishers)
+        {
+            <tr>
+                <td>@publisher.Name</td>
+                <td>@publisher.City</td>
+                <td>@publisher.Country</td>
+                <td class="text-end text-nowrap">
+                    <a class="btn btn-sm btn-outline-primary" asp-page="Edit" asp-route-id="@publisher.PublisherId">Редагувати</a>
+                    <partial name="_DeleteButton" model="publisher.PublisherId" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,238 @@
+/* Стиль «Книжковий матчмейкер»: світлий нейтральний фон,
+   темно-синій для головних акцентів, два шрифти */
+
+:root {
+  --lm-accent: #2E4A6B;      /* основний акцент: кнопки, посилання, активний пункт меню */
+  --lm-accent-dark: #233A55; /* наведення і натискання */
+  --lm-paper: #F8F8F6;       /* фон сторінки */
+  --lm-surface: #F0F0EC;     /* шапка таблиць, рядок під курсором */
+  --lm-line: #E3E3DE;        /* лінії і рамки */
+  --lm-title: #1F2D3D;       /* заголовки */
+  --lm-ink: #2A2D33;         /* основний текст */
+  --lm-muted: #666B73;       /* другорядний текст */
+  --lm-gold: #D99A2B;        /* зірочки оцінок */
+
+  /* Світлі кольори статусів і дій: фон і текст */
+  --lm-green-bg: #E2F1E7;
+  --lm-green: #2E6B45;
+  --lm-red-bg: #FBE4E1;
+  --lm-red: #A6362E;
+  --lm-grey-bg: #ECEDEF;
+  --lm-grey: #5B616A;
+
+  /* Два шрифти: Georgia для заголовків, Segoe UI для решти тексту */
+  --lm-font-title: Georgia, "Times New Roman", serif;
+  --lm-font-text: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+
+  --bs-body-font-family: var(--lm-font-text);
+  --bs-primary: var(--lm-accent);
+  --bs-primary-rgb: 46, 74, 107;
+  --bs-body-bg: var(--lm-paper);
+  --bs-body-color: var(--lm-ink);
+  --bs-secondary-color: var(--lm-muted);
+  --bs-border-color: var(--lm-line);
+  --bs-link-color: var(--lm-accent);
+  --bs-link-color-rgb: 46, 74, 107;
+  --bs-link-hover-color: var(--lm-accent-dark);
+  --bs-link-hover-color-rgb: 35, 58, 85;
+  --bs-border-radius: 0.5rem;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 70px;
+}
+
+h1, h2, h3, h4, .navbar-brand {
+  font-family: var(--lm-font-title);
+  font-weight: normal;
+  color: var(--lm-title);
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Меню */
+.navbar {
+  background: #fff;
+  border-bottom: 1px solid var(--lm-line);
+}
+
+.navbar .nav-link {
+  color: var(--lm-ink);
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: var(--lm-accent-dark);
+}
+
+.dropdown-item:active {
+  background: var(--lm-accent);
+}
+
+/* Кнопки */
+.btn-primary {
+  --bs-btn-bg: var(--lm-accent);
+  --bs-btn-border-color: var(--lm-accent);
+  --bs-btn-hover-bg: var(--lm-accent-dark);
+  --bs-btn-hover-border-color: var(--lm-accent-dark);
+  --bs-btn-active-bg: var(--lm-accent-dark);
+  --bs-btn-active-border-color: var(--lm-accent-dark);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--lm-accent);
+  --bs-btn-border-color: var(--lm-accent);
+  --bs-btn-hover-bg: var(--lm-accent);
+  --bs-btn-hover-border-color: var(--lm-accent);
+  --bs-btn-active-bg: var(--lm-accent-dark);
+  --bs-btn-active-border-color: var(--lm-accent-dark);
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--lm-muted);
+  --bs-btn-border-color: var(--lm-line);
+  --bs-btn-hover-bg: var(--lm-surface);
+  --bs-btn-hover-color: var(--lm-ink);
+  --bs-btn-hover-border-color: var(--lm-line);
+}
+
+/* «Повернути» */
+.btn-success {
+  --bs-btn-color: var(--lm-green);
+  --bs-btn-bg: var(--lm-green-bg);
+  --bs-btn-border-color: var(--lm-green-bg);
+  --bs-btn-hover-color: #255A39;
+  --bs-btn-hover-bg: #CDE7D6;
+  --bs-btn-hover-border-color: #CDE7D6;
+  --bs-btn-active-color: #255A39;
+  --bs-btn-active-bg: #CDE7D6;
+  --bs-btn-active-border-color: #CDE7D6;
+}
+
+/* «Видалити» */
+.btn-outline-danger {
+  --bs-btn-color: var(--lm-red);
+  --bs-btn-border-color: #EBC4BF;
+  --bs-btn-hover-color: #8F2C25;
+  --bs-btn-hover-bg: var(--lm-red-bg);
+  --bs-btn-hover-border-color: #EBC4BF;
+  --bs-btn-active-color: #8F2C25;
+  --bs-btn-active-bg: #F7D2CD;
+  --bs-btn-active-border-color: #EBC4BF;
+}
+
+/* «Оцінити» */
+.btn-outline-warning {
+  --bs-btn-color: #8A5A0F;
+  --bs-btn-border-color: #EBCB8F;
+  --bs-btn-hover-color: #7A4F0C;
+  --bs-btn-hover-bg: #F8E7C4;
+  --bs-btn-hover-border-color: #EBCB8F;
+}
+
+/* Вкладки у видачах */
+.nav-pills {
+  --bs-nav-pills-link-active-bg: var(--lm-accent);
+  --bs-nav-link-color: var(--lm-ink);
+  --bs-nav-link-hover-color: var(--lm-accent-dark);
+}
+
+/* Поля форм */
+.form-control,
+.form-select {
+  background-color: #fff;
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  border-color: var(--lm-accent);
+  box-shadow: 0 0 0 0.2rem rgba(46, 74, 107, 0.15);
+}
+
+.form-check-input:checked {
+  background-color: var(--lm-accent);
+  border-color: var(--lm-accent);
+}
+
+.text-danger {
+  color: var(--lm-red) !important;
+}
+
+.input-validation-error {
+  border-color: var(--lm-red);
+}
+
+/* Таблиці */
+.table {
+  --bs-table-bg: #fff;
+  --bs-table-hover-bg: var(--lm-surface);
+  border: 1px solid var(--lm-line);
+}
+
+.table thead th {
+  background: var(--lm-surface);
+  color: var(--lm-ink);
+  font-weight: 600;
+}
+
+/* Статуси видач */
+.badge {
+  font-weight: 500;
+}
+
+.status-onloan { background: var(--lm-green-bg); color: var(--lm-green); }
+.status-overdue { background: var(--lm-red-bg); color: var(--lm-red); }
+.status-returned { background: var(--lm-grey-bg); color: var(--lm-grey); }
+
+/* Повідомлення */
+.alert-success {
+  background: var(--lm-green-bg);
+  border-color: #CDE7D6;
+  color: var(--lm-green);
+}
+
+.alert-danger {
+  background: var(--lm-red-bg);
+  border-color: #F3CFCA;
+  color: var(--lm-red);
+}
+
+/* Відсоток збігу в підборі книг */
+.progress {
+  background: var(--lm-surface);
+  height: 0.5rem;
+}
+
+.progress-bar {
+  background: var(--lm-accent);
+}
+
+.stars {
+  color: var(--lm-gold);
+  white-space: nowrap;
+}
+
+/* Головна сторінка */
+.home {
+  max-width: 600px;
+  margin: 4rem auto 0;
+}
+
+/* Футер */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  line-height: 60px;
+  color: var(--lm-muted);
+  border-top: 1px solid var(--lm-line);
+  background: #fff;
+}

@@ -1,0 +1,55 @@
+@page
+@model LibraryMatchmaker.Pages.Statistics.IndexModel
+@{
+    ViewData["Title"] = "Статистика";
+}
+
+<h1 class="mb-3">Статистика</h1>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <h4>Найпопулярніші книги</h4>
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr><th>Книга</th><th class="text-center">Видач</th><th class="text-center">Оцінка</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model.Popular)
+                {
+                    <tr>
+                        <td>
+                            <a asp-page="/Books/Details" asp-route-id="@book.BookId">@book.Title</a>
+                            <div class="small text-muted">@book.Author</div>
+                        </td>
+                        <td class="text-center">@book.LoansCount</td>
+                        <td class="text-center">@Fmt.Rating(book.AvgRating)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-7">
+        <h4>Жанри</h4>
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Жанр</th><th class="text-center">Книг</th><th class="text-center">Видач</th>
+                    <th class="text-center">Оцінка</th><th class="text-center">Улюблений у читачів</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var genre in Model.Genres)
+                {
+                    <tr>
+                        <td><a asp-page="/Books/Index" asp-route-genreId="@genre.GenreId">@genre.Genre</a></td>
+                        <td class="text-center">@genre.BooksCount</td>
+                        <td class="text-center">@genre.LoansCount</td>
+                        <td class="text-center">@Fmt.Rating(genre.AvgRating)</td>
+                        <td class="text-center">@genre.FansCount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

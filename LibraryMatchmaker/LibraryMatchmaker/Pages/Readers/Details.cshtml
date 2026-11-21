@@ -1,0 +1,93 @@
+@page "{id:int?}"
+@model LibraryMatchmaker.Pages.Readers.DetailsModel
+@{
+    ViewData["Title"] = Model.Reader.FullName;
+}
+
+<div class="d-flex justify-content-between align-items-start mb-3">
+    <div>
+        <h1>@Model.Reader.FullName</h1>
+        <p class="text-muted mb-1">@Model.Reader.Phone @(Model.Reader.Email != null ? "· " + Model.Reader.Email : "")</p>
+        <p class="mb-0">
+            Улюблені жанри:
+            @(Model.FavoriteGenres.Count > 0 ? string.Join(", ", Model.FavoriteGenres) : "ще не обрані")
+        </p>
+    </div>
+    <div class="text-nowrap">
+        <a class="btn btn-primary" asp-page="/Loans/Edit" asp-route-readerId="@Model.Reader.ReaderId">Видати книгу</a>
+        <a class="btn btn-outline-primary" asp-page="Edit" asp-route-id="@Model.Reader.ReaderId">Редагувати</a>
+    </div>
+</div>
+
+<h4 class="mt-4">Підбір книг</h4>
+@if (Model.Recommendations.Count == 0)
+{
+    <p class="text-muted">Немає книг для підбору: читач уже брав усі книги каталогу.</p>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr><th>Книга</th><th>Автор</th><th>Жанр</th><th class="text-center">Оцінка</th><th class="text-center">Вільно</th><th style="width: 22%">Збіг</th><th>Чому радимо</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model.Recommendations)
+            {
+                <tr>
+                    <td><a asp-page="/Books/Details" asp-route-id="@book.BookId">@book.Title</a></td>
+                    <td>@book.Author</td>
+                    <td>@book.Genre</td>
+                    <td class="text-center">@Fmt.Rating(book.AvgRating)</td>
+                    <td class="text-center">@book.CopiesAvailable</td>
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="progress flex-grow-1" role="progressbar" aria-valuenow="@book.MatchPercent" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: @(book.MatchPercent)%"></div>
+                            </div>
+                            <span>@book.MatchPercent%</span>
+                        </div>
+                    </td>
+                    <td>@(book.Reason != "" ? book.Reason : "—")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h4 class="mt-4">Історія видач</h4>
+@if (Model.History.Count == 0)
+{
+    <p class="text-muted">Читач ще не брав книг.</p>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr><th>Книга</th><th>Автор</th><th>Видано</th><th>Термін</th><th>Повернено</th><th>Статус</th><th>Оцінка</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var loan in Model.History)
+            {
+                <tr>
+                    <td><a asp-page="/Books/Details" asp-route-id="@loan.BookId">@loan.Title</a></td>
+                    <td>@loan.Author</td>
+                    <td>@Fmt.Date(loan.LoanDate)</td>
+                    <td>@Fmt.Date(loan.DueDate)</td>
+                    <td>@Fmt.Date(loan.ReturnDate)</td>
+                    <td><span class="badge @Fmt.StatusClass(loan.Status)">@loan.Status</span></td>
+                    <td>
+                        @if (loan.Rating != null)
+                        {
+                            <span class="stars">@Fmt.Stars(loan.Rating)</span>
+                        }
+                        else if (loan.ReturnDate != null)
+                        {
+                            <a class="btn btn-sm btn-outline-warning" asp-page="/Reviews/Edit"
+                               asp-route-readerId="@Model.Reader.ReaderId" asp-route-bookId="@loan.BookId">Оцінити</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

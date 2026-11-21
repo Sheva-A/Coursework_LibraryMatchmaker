@@ -1,0 +1,34 @@
+@page "{id:int?}"
+@model LibraryMatchmaker.Pages.Publishers.EditModel
+@{
+    ViewData["Title"] = Model.IsNew ? "Нове видавництво" : "Редагування видавництва";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+    <input type="hidden" asp-for="Item.PublisherId" />
+
+    <div class="mb-3">
+        <label asp-for="Item.Name" class="form-label">Назва</label>
+        <input asp-for="Item.Name" class="form-control" />
+        <span asp-validation-for="Item.Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.City" class="form-label">Місто</label>
+        <input asp-for="Item.City" class="form-control" />
+        <span asp-validation-for="Item.City" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.Country" class="form-label">Країна</label>
+        <input asp-for="Item.Country" class="form-control" />
+        <span asp-validation-for="Item.Country" class="text-danger"></span>
+    </div>
+
+    <partial name="_FormButtons" />
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

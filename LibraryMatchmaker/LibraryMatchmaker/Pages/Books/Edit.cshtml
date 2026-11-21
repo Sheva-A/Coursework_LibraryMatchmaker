@@ -1,0 +1,60 @@
+@page "{id:int?}"
+@model LibraryMatchmaker.Pages.Books.EditModel
+@{
+    ViewData["Title"] = Model.IsNew ? "Нова книга" : "Редагування книги";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+    <input type="hidden" asp-for="Item.BookId" />
+
+    <div class="mb-3">
+        <label asp-for="Item.Title" class="form-label">Назва</label>
+        <input asp-for="Item.Title" class="form-control" />
+        <span asp-validation-for="Item.Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.AuthorId" class="form-label">Автор</label>
+        <select asp-for="Item.AuthorId" asp-items="Model.Authors" class="form-select">
+            <option value="">Оберіть автора</option>
+        </select>
+        <span asp-validation-for="Item.AuthorId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.PublisherId" class="form-label">Видавництво</label>
+        <select asp-for="Item.PublisherId" asp-items="Model.Publishers" class="form-select">
+            <option value="">Оберіть видавництво</option>
+        </select>
+        <span asp-validation-for="Item.PublisherId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.GenreId" class="form-label">Жанр</label>
+        <select asp-for="Item.GenreId" asp-items="Model.Genres" class="form-select">
+            <option value="">Оберіть жанр</option>
+        </select>
+        <span asp-validation-for="Item.GenreId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.Isbn" class="form-label">ISBN</label>
+        <input asp-for="Item.Isbn" class="form-control" placeholder="13 цифр без дефісів" />
+        <span asp-validation-for="Item.Isbn" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.YearPublished" class="form-label">Рік видання</label>
+        <input asp-for="Item.YearPublished" class="form-control" />
+        <span asp-validation-for="Item.YearPublished" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.CopiesTotal" class="form-label">Примірників усього</label>
+        <input asp-for="Item.CopiesTotal" class="form-control" />
+        <span asp-validation-for="Item.CopiesTotal" class="text-danger"></span>
+    </div>
+
+    <partial name="_FormButtons" />
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
